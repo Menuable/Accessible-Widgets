@@ -1,0 +1,68 @@
+{
+  "name": "accessible-widgets",
+  "version": "1.0.0",
+  "description": "A utility package to enable developers add keyboard accessibility to their widgets.",
+  "main": "dist/accessible-widgets.esm.min.js",
+  "module": "dist/accessible-widgets.esm.min.js",
+  "browser": "dist/accessible-widgets.umd.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts",
+    "complile": "npx tsc",
+    "prepare": "husky install",
+    "commit": "cz",
+    "build": "rollup -c",
+    "watch": "rollup -c -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Menuable/Accessible-Widgets.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Menuable/Accessible-Widgets/issues"
+  },
+  "homepage": "https://github.com/Menuable/Accessible-Widgets#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "lint-staged": {
+    "*.{css,less,scss,html,ts}": [
+      "prettier --write ."
+    ],
+    "*.js": "eslint --fix"
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
+    }
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard-with-typescript": "^43.0.0",
+    "eslint-plugin-prettier": "^5.1.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.1",
+    "rollup": "^4.9.1",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "semantic-release": "^22.0.12",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "files": [
+    "dist"
+  ]
+}
