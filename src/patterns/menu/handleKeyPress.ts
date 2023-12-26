@@ -120,6 +120,66 @@ const handleKeyPress = (
     }
   }
 
+  if (initPattern === 'menubar') {
+    if (mirrorArrowBtn === true) {
+      console.warn(
+        'Property "mirrorArrowBtn" has no effect when initPattern is set to "menubar".',
+      );
+    }
+    switch (event.key) {
+      case ' ':
+        lastFocusedElement.setAttribute('aria-expanded', 'false');
+        lastFocusedElement.focus();
+        (document.activeElement as HTMLElement)?.click();
+        break;
+
+      case 'ArrowRight':
+        if (currentActiveIndex === lastTabStopIndex) {
+          itemList[firstTabStopIndex].focus();
+        } else {
+          itemList[currentActiveIndex + 1].focus();
+        }
+        break;
+
+      case 'ArrowLeft':
+        if (currentActiveIndex === firstTabStopIndex) {
+          itemList[lastTabStopIndex].focus();
+        } else {
+          itemList[currentActiveIndex - 1].focus();
+        }
+        break;
+
+      case 'ArrowDown':
+        if (isMenuAllyControl(document.activeElement as HTMLElement)) {
+          (document.activeElement as HTMLElement).click();
+        } else {
+          return;
+        }
+        break;
+
+      case 'ArrowUp':
+        if (isMenuAllyControl(document.activeElement as HTMLElement)) {
+          (document.activeElement as HTMLElement).click();
+        } else {
+          return;
+        }
+        break;
+
+      case 'Home':
+        itemList[0].focus();
+        break;
+
+      case 'End':
+        itemList[itemList.length - 1].focus();
+        break;
+
+      // TODO: Add support for to jump to menuitem starting with the letter of each character key
+
+      default:
+        break;
+    }
+  }
+
   // Cancel the default action to avoid it being handled twice
   event.preventDefault();
 };
