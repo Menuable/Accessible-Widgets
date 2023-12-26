@@ -1,7 +1,7 @@
 import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
-import pkg from './package.json';
+import pkg from './package.json' assert { type: 'json' };
 
 export default [
   {
@@ -9,7 +9,7 @@ export default [
     plugins: [terser(), typescript()],
     output: [
       {
-        name: 'menually',
+        name: 'accessible-widgets',
         file: pkg.browser,
         format: 'umd',
       },
@@ -17,11 +17,14 @@ export default [
         file: pkg.module,
         format: 'es',
       },
+      {
+        file: pkg.main,
+      },
     ],
   },
   {
-    input: 'dist/dts/index.d.ts',
+    input: 'dist/index.d.ts',
     plugins: [dts()],
-    output: [{ file: 'dist/index.d.ts', format: 'es' }],
+    output: [{ file: 'dist/dts/index.d.ts', format: 'es' }],
   },
 ];
