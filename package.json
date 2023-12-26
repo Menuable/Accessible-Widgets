@@ -2,9 +2,10 @@
   "name": "accessible-widgets",
   "version": "1.0.0",
   "description": "A utility package to enable developers add keyboard accessibility to their widgets.",
-  "main": "dist/accessible-widgets.esm.min.js",
-  "module": "dist/accessible-widgets.esm.min.js",
-  "browser": "dist/accessible-widgets.umd.min.js",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "browser": "dist/index.umd.js",
+  "types": "dist/dts/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts",
