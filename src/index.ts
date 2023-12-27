@@ -1,3 +1,3 @@
-import AccessibleMenu from './patterns/menu/index.ts';
+import AccessibleMenu from './widgets/menu/index';
 
 export { AccessibleMenu };
