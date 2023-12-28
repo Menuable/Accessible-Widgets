@@ -3,7 +3,7 @@ import handleKeyPress from './handleKeyPress';
 type Elements = {
   menuButton: HTMLElement | null;
   menuElement: HTMLElement | null;
-  focusableMenuItems: HTMLElement[] | NodeListOf<HTMLElement>;
+  focusableMenuItems: HTMLElement[];
 };
 
 type MenuInitOptions = {
@@ -30,20 +30,24 @@ class AccessibleMenu {
     );
     const menuElement = document.querySelector<HTMLElement>(`${this.menu}`);
 
-    let focusableMenuItems: HTMLElement[] | NodeListOf<HTMLElement>;
+    let focusableMenuItems: HTMLElement[];
 
     if (menuElement !== null && this.menuItems === undefined) {
-      const menuChildren = Array.from(menuElement.children);
+      const menuChildren = menuElement.childNodes as NodeListOf<HTMLElement>;
 
-      focusableMenuItems = menuChildren.filter(child => {
+      const menuChildrenArray = Array.from(menuChildren);
+
+      focusableMenuItems = menuChildrenArray.filter(child => {
         return (
           child instanceof HTMLAnchorElement ||
           child instanceof HTMLButtonElement ||
           child instanceof HTMLInputElement
         );
-      }) as HTMLElement[];
+      });
     } else {
-      focusableMenuItems = document.querySelectorAll(`${this.menuItems}`);
+      focusableMenuItems = Array.from(
+        document.querySelectorAll(`${this.menuItems}`),
+      );
     }
 
     return { menuButton, menuElement, focusableMenuItems };
@@ -111,7 +115,7 @@ class AccessibleMenu {
               handleKeyPress(
                 event,
                 lastFocusedElement as HTMLElement,
-                focusableMenuItems as HTMLElement[],
+                focusableMenuItems,
                 initOptions?.pattern,
                 initOptions?.mirrorArrowBtn,
               );
