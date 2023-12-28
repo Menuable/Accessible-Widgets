@@ -8,23 +8,32 @@ const isMenuAllyControl = (element: HTMLElement): boolean => {
 
 const characterRegex = /[aA-zZ]/;
 
-const isAlphabeticalKey = (key: string): boolean => {
-  return characterRegex.test(key);
+const returnKeyIfAlphabeticalKey = (key: string): null | string => {
+  if (characterRegex.test(key)) {
+    return key;
+  } else {
+    return null;
+  }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const handleAlphabeticalKey = (key: string, itemList: HTMLElement[]): void => {
   const matchingArray = key.match(characterRegex);
-  console.log(matchingArray);
 
   if (matchingArray !== null) {
-    const pressedCharacter = matchingArray[0];
+    const pressedCharacter = matchingArray[0].toLowerCase();
+
+    console.log(pressedCharacter);
 
     const matchingMenuItem = itemList.filter(item => {
-      return item.textContent?.startsWith(pressedCharacter);
+      return item.textContent
+        ?.trim()
+        .toLowerCase()
+        .startsWith(pressedCharacter);
     });
 
-    matchingMenuItem[0].focus();
+    if (matchingMenuItem.length !== 0) {
+      matchingMenuItem[0].focus();
+    }
   }
 };
 
@@ -190,10 +199,11 @@ const handleKeyPress = (
         break;
 
       // FIX: Fix default behaviour of running automatically on press of each character key
+      case returnKeyIfAlphabeticalKey(event.key):
+        handleAlphabeticalKey(event.key, itemList);
+        break;
+
       default:
-        if (isAlphabeticalKey(event.key)) {
-          console.log('Is Alphabet');
-        }
         break;
     }
   }
