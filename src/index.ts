@@ -1,3 +1,3 @@
-import AccessibleMenu from './widgets/menu/index';
+import MenuWidget from './widgets/menu/index';
 
-export { AccessibleMenu };
+export { MenuWidget };
