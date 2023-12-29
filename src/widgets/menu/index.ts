@@ -14,25 +14,25 @@ type MenuInitOptions = {
 };
 
 class MenuWidget {
-  menuControl: string;
-  menu: string;
-  menuItems?: string;
+  readonly #menuControl: string;
+  readonly #menu: string;
+  readonly #menuItems?: string;
 
   constructor(menuControl: string, menu: string, menuItems?: string) {
-    this.menuControl = menuControl;
-    this.menu = menu;
-    this.menuItems = menuItems;
+    this.#menuControl = menuControl;
+    this.#menu = menu;
+    this.#menuItems = menuItems;
   }
 
   getElements(): WidgetElements {
     const menuButton = document.querySelector<HTMLElement>(
-      `${this.menuControl}`,
+      `${this.#menuControl}`,
     );
-    const menuElement = document.querySelector<HTMLElement>(`${this.menu}`);
+    const menuElement = document.querySelector<HTMLElement>(`${this.#menu}`);
 
     let focusableMenuItems: HTMLElement[];
 
-    if (menuElement !== null && this.menuItems === undefined) {
+    if (menuElement !== null && this.#menuItems === undefined) {
       const menuChildren = menuElement.childNodes as NodeListOf<HTMLElement>;
 
       const menuChildrenArray = Array.from(menuChildren);
@@ -46,7 +46,7 @@ class MenuWidget {
       });
     } else {
       focusableMenuItems = Array.from(
-        document.querySelectorAll(`${this.menuItems}`),
+        document.querySelectorAll(`${this.#menuItems}`),
       );
     }
 
@@ -82,11 +82,11 @@ class MenuWidget {
 
       menuButton.setAttribute('aria-expanded', 'false'); // set the aria-expanded attribute to false by default
 
-      menuButton.setAttribute('data-menually-control', this.menuControl); // set the aria-expanded attribute to false by default
+      menuButton.setAttribute('data-menually-control', this.#menuControl); // set the aria-expanded attribute to false by default
 
       menuElement.setAttribute('role', 'menu'); // set the role property to menu
 
-      menuElement.setAttribute('data-menually-menu', this.menu); // set the role property to menu
+      menuElement.setAttribute('data-menually-menu', this.#menu); // set the role property to menu
 
       menuButton.addEventListener('click', () => {
         if (menuButton.getAttribute('aria-expanded') === 'true') {
