@@ -22,8 +22,6 @@ const handleAlphabeticalKey = (key: string, itemList: HTMLElement[]): void => {
   if (matchingArray !== null) {
     const pressedCharacter = matchingArray[0].toLowerCase();
 
-    console.log(pressedCharacter);
-
     const matchingMenuItem = itemList.filter(item => {
       return item.textContent
         ?.trim()
