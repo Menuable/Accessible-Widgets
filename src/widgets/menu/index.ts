@@ -10,6 +10,7 @@ type MenuInitOptions = {
   mirrorArrowBtn?: boolean;
   pattern?: 'menubar' | 'disclosure';
   ariaLabel: string | null;
+  ariaLabelledBy: string | null;
   ariaExpanded: boolean | null;
 };
 
@@ -58,6 +59,7 @@ class MenuWidget {
     let initOptions: MenuInitOptions = {
       ariaExpanded: false,
       ariaLabel: '',
+      ariaLabelledBy: '',
       mirrorArrowBtn: true,
       pattern: 'disclosure',
     };
@@ -67,8 +69,27 @@ class MenuWidget {
     }
 
     if (menuButton !== null && menuElement !== null) {
-      if (initOptions?.ariaExpanded === true) {
+      menuButton.setAttribute('aria-expanded', 'false'); // set the aria-expanded attribute to false by default
+
+      menuButton.setAttribute('aria-controls', menuElement.id); // set the aria-expanded attribute to false by default
+
+      menuButton.setAttribute('data-menually-control', this.#menuControl); // add a data attribute to the menuButton to show it has been registered successfully
+
+      menuElement.setAttribute('data-menually-menu', this.#menu); // add a data attribute to the menuElement to show it has been registered successfully
+
+      if (initOptions.ariaExpanded === true) {
         menuButton.setAttribute('aria-expanded', 'true');
+      }
+
+      if (initOptions.ariaLabel !== '' && initOptions.ariaLabel !== null) {
+        menuButton.setAttribute('aria-label', initOptions.ariaLabel);
+      }
+
+      if (
+        initOptions.ariaLabelledBy !== '' &&
+        initOptions.ariaLabelledBy !== null
+      ) {
+        menuButton.setAttribute('aria-label', initOptions.ariaLabelledBy);
       }
 
       if (
@@ -80,13 +101,14 @@ class MenuWidget {
         );
       }
 
-      menuButton.setAttribute('aria-expanded', 'false'); // set the aria-expanded attribute to false by default
-
-      menuButton.setAttribute('data-menually-control', this.#menuControl); // set the aria-expanded attribute to false by default
-
-      menuElement.setAttribute('role', 'menu'); // set the role property to menu
-
-      menuElement.setAttribute('data-menually-menu', this.#menu); // set the role property to menu
+      if (
+        initOptions.pattern === 'disclosure' ||
+        initOptions.pattern === undefined
+      ) {
+        menuElement.setAttribute('role', 'menu'); // set the role property to menu if the menu pattern is set to 'disclosure' or undefined.
+      } else {
+        menuElement.setAttribute('role', 'menubar'); // set the role property to menubar if the menu pattern is set to 'menubar'
+      }
 
       menuButton.addEventListener('click', () => {
         if (menuButton.getAttribute('aria-expanded') === 'true') {
@@ -105,6 +127,7 @@ class MenuWidget {
           // Prevent all menuitems from receiving focus via tab key press
           focusableMenuItems.forEach(menuitem => {
             menuitem.setAttribute('tabindex', '-1');
+            menuitem.setAttribute('role', 'menuitem');
           });
 
           const firstTabStop = focusableMenuItems[0];
@@ -116,8 +139,8 @@ class MenuWidget {
                 event,
                 lastFocusedElement as HTMLElement,
                 focusableMenuItems,
-                initOptions?.pattern,
-                initOptions?.mirrorArrowBtn,
+                initOptions.pattern,
+                initOptions.mirrorArrowBtn,
               );
             });
           });
