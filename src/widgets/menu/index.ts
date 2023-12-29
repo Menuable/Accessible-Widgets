@@ -1,6 +1,6 @@
 import handleKeyPress from './handleKeyPress';
 
-type Elements = {
+type WidgetElements = {
   menuButton: HTMLElement | null;
   menuElement: HTMLElement | null;
   focusableMenuItems: HTMLElement[];
@@ -13,7 +13,7 @@ type MenuInitOptions = {
   ariaExpanded: boolean | null;
 };
 
-class AccessibleMenu {
+class MenuWidget {
   menuControl: string;
   menu: string;
   menuItems?: string;
@@ -24,7 +24,7 @@ class AccessibleMenu {
     this.menuItems = menuItems;
   }
 
-  getElements(): Elements {
+  getElements(): WidgetElements {
     const menuButton = document.querySelector<HTMLElement>(
       `${this.menuControl}`,
     );
@@ -131,4 +131,4 @@ class AccessibleMenu {
   }
 }
 
-export default AccessibleMenu;
+export default MenuWidget;
