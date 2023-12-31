@@ -2,10 +2,14 @@
 
 ## Table of Content
 
-- [Getting Started](#introduction)
-  - [Using MenuWidget](#menuwidget)
+- [Accessible Widgets - Easy Plug-and-Play Accessibility Improvement For Your Web Widgets](#accessible-widgets---easy-plug-and-play-accessibility-improvement-for-your-web-widgets)
+  - [Table of Content](#table-of-content)
+  - [Getting Started ](#getting-started-)
+    - [Using MenuWidget ](#using-menuwidget-)
+      - [MenuWidget Init Options ](#menuwidget-init-options-)
+  - [Roadmap ](#roadmap-)
 
-Accessible Widgets is a plug-and-play utility package that allows developers easily improve the accessibility of their web widgets. With a start of 2 widgets to choose from, this package will automatically add AND update the necessary ARIA attributes for your widgets and handle the keyboard navigation also automatically.
+Accessible Widgets is a plug-and-play utility package that allows developers easily improve the accessibility of their web widgets. With a start of 2 widgets to choose from, this package will automatically add AND update the necessary ARIA attributes for your widgets and handle the keyboard navigation also automatically. All widgets are created and have the keyboard navigations describes in [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/).
 
 ## Getting Started <a name="introduction"></a>
 
@@ -46,7 +50,7 @@ const notificationMenuWidget = new MenuWidget(
 );
 ```
 
-After registering your elements with the package, next you need to intialise the widget by calling the init method. The widget may be initialised with or without options, like so:
+After registering your elements with the package, next you need to intialise the widget by calling the init method. The widget may be initialised with or without [options](#menuwidgetoptions), like so:
 
 ```javascript
 import { MenuWidget } from 'accessible-widgets';
@@ -73,18 +77,30 @@ merchantProfileMenu.init({
 });
 ```
 
-### Using AccordionWidget
+#### MenuWidget Init Options <a name="menuwidgetoptions"></a>
 
-The **`AccordionWidget`** class allows you improve the accessibility and keyboard navigation of accordions in you web application. At its minimum, the AccordionWidget requires an `**accordionTrigger**` and an `**accordionPanel**` parameter both of which **MUST** be valid [CSS Selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors). It follows the same convention as the MenuWidget:
+- `ariaExpanded - boolean`
 
-```javascript
-import { AccordionWidget } from 'accessible-widgets';
+  What the aria-expanded attribute should be set to on initialisation. Default value is set to true.
 
-// Register your elements with the package
-const notificationMenuWidget = new AccordionWidget(
-  '#accordionTrigger',
-  '#accordionPanel',
-);
-```
+- `ariaLabel - string`
+
+  What the aria-label attribute should be set to on initialisation. Recommended if the element has no visually persistent label.
+
+- `ariaLabelledBy - string`
+
+  What the aria-labelledby attribute should be set to on initialisation. Note that if set, it takes precedence over ariaLabel.
+
+- `mirrorArrowBtn - boolean`
+
+  If the keyboard arrow buttons should be mirrored, i.e. **ArrowDown** and **ArrowRight** keys share the same functionalities as does the **ArrowUp** and **ArrowLeft** keys. Default value is `true`. Also note that this option does nothing when the pattern option is set to type `menubar`
+
+- `pattern - 'disclosure' | 'menubar'`
+
+  The menu pattern to use on initialisation. Default value is `disclosure`. Please refer to the [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/) to see how these types differ.
+
+## Roadmap <a name="roadmap"></a>
+
+Presently the package only has implementations for one widget. Work is ongoing to add another widget for accordions and that should be completed. Weekly releases can be expected until we complete all widgets.
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
