@@ -9,9 +9,9 @@ type WidgetElements = {
 type MenuInitOptions = {
   mirrorArrowBtn?: boolean;
   pattern?: 'menubar' | 'disclosure';
-  ariaLabel: string | null;
-  ariaLabelledBy: string | null;
-  ariaExpanded: boolean | null;
+  ariaLabel?: string;
+  ariaLabelledBy?: string;
+  ariaExpanded?: boolean;
 };
 
 class MenuWidget {
@@ -69,36 +69,35 @@ class MenuWidget {
     }
 
     if (menuButton !== null && menuElement !== null) {
-      menuButton.setAttribute('aria-expanded', 'false'); // set the aria-expanded attribute to false by default
-
-      menuButton.setAttribute('aria-controls', menuElement.id); // set the aria-expanded attribute to false by default
-
       menuButton.setAttribute('data-menually-control', this.#menuControl); // add a data attribute to the menuButton to show it has been registered successfully
 
       menuElement.setAttribute('data-menually-menu', this.#menu); // add a data attribute to the menuElement to show it has been registered successfully
 
+      /* ====================================
+       Set necessary ARIA attributes on initialisation
+      ==================================== */
+      menuButton.setAttribute('aria-controls', menuElement.id); // set the aria-expanded attribute to false by default
+
       if (initOptions.ariaExpanded === true) {
         menuButton.setAttribute('aria-expanded', 'true');
+      } else {
+        menuButton.setAttribute('aria-expanded', 'false'); // set the aria-expanded attribute to false by default
       }
 
-      if (initOptions.ariaLabel !== '' && initOptions.ariaLabel !== null) {
+      if (
+        initOptions.ariaLabel !== undefined &&
+        initOptions.ariaLabel !== '' &&
+        initOptions.ariaLabelledBy === undefined &&
+        initOptions.ariaLabelledBy === ''
+      ) {
         menuButton.setAttribute('aria-label', initOptions.ariaLabel);
       }
 
       if (
         initOptions.ariaLabelledBy !== '' &&
-        initOptions.ariaLabelledBy !== null
+        initOptions.ariaLabelledBy !== undefined
       ) {
-        menuButton.setAttribute('aria-label', initOptions.ariaLabelledBy);
-      }
-
-      if (
-        initOptions.pattern === 'menubar' &&
-        initOptions.mirrorArrowBtn === true
-      ) {
-        console.warn(
-          'Property "mirrorArrowBtn" has no effect when initPattern is set to "menubar".',
-        );
+        menuButton.setAttribute('aria-labelledby', initOptions.ariaLabelledBy);
       }
 
       if (
@@ -109,7 +108,21 @@ class MenuWidget {
       } else {
         menuElement.setAttribute('role', 'menubar'); // set the role property to menubar if the menu pattern is set to 'menubar'
       }
+      /* ========================================
+      End of setting ARIA attributes
+      ======================================== */
 
+      if (
+        initOptions.pattern === 'menubar' &&
+        initOptions.mirrorArrowBtn === true
+      ) {
+        console.warn(
+          // Warn the developer that the mirrorArrowBtn property does nothing when the set pattern is 'menubar'
+          'Property "mirrorArrowBtn" has no effect when initPattern is set to "menubar".',
+        );
+      }
+
+      // Create tab trap when the menuButton is activated via mouse clicks or Enter key press
       menuButton.addEventListener('click', () => {
         if (menuButton.getAttribute('aria-expanded') === 'true') {
           menuButton.setAttribute('aria-expanded', 'false');
@@ -118,8 +131,9 @@ class MenuWidget {
         }
 
         if (focusableMenuItems.length === 0) {
+          // No menuitems to iterate through to create the tab trap either because no direct focusable children exists or wrong CSS selector was passed.
           throw new Error(
-            'Unable to create tab trap. No focusable element was given and no direct children exist',
+            'Unable to create tab trap. No focusable element exists to create trap with',
           );
         } else {
           const lastFocusedElement = document.activeElement;
@@ -148,7 +162,7 @@ class MenuWidget {
       });
     } else {
       throw new Error(
-        'Widget must be instantiated with a menu control and a menu!',
+        'Widget initialisation failed. Widget must be instantiated with a menu control and a menu!',
       );
     }
   }
