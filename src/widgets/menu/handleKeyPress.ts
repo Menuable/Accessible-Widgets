@@ -156,6 +156,12 @@ const handleKeyPress = (
         (document.activeElement as HTMLElement)?.click();
         break;
 
+      case 'Escape':
+        // Should close the menu and focus on the toggle button
+        lastFocusedElement.setAttribute('aria-expanded', 'false');
+        lastFocusedElement.focus();
+        break;
+
       case 'ArrowRight':
         if (currentActiveIndex === lastTabStopIndex) {
           itemList[firstTabStopIndex].focus();
