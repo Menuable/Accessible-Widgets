@@ -1,4 +1,3 @@
-
 # Accessible Widgets - Easy Plug-and-Play Accessibility Improvement For Your Web Widgets
 
 ## Table of Content
@@ -14,7 +13,7 @@ Accessible Widgets is a plug-and-play utility package that allows developers eas
 
 All widgets follow the keyboard navigation guidelines in the [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/).
 
-**Note:** This package has nothing to do with styling, it is purely focused on accessibility. 
+**Note:** This package has nothing to do with styling, it is purely focused on accessibility.
 
 ## Getting Started <a name="introduction"></a>
 

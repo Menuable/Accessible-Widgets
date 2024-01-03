@@ -1,59 +1,81 @@
 type WidgetElements = {
-  accordionTrigger: HTMLElement | null;
-  accordionPanel: HTMLElement | null;
+  accordionTriggers: HTMLElement[] | null;
+  accordionPanels: HTMLElement[] | null;
 };
 
 class AccordionWidget {
-  readonly #accordionTrigger: string;
-  readonly #accordionPanel: string;
+  readonly #accordionTriggers: string;
+  readonly #accordionPanels: string;
 
-  constructor(accordionTrigger: string, accordionPanel: string) {
-    this.#accordionTrigger = accordionTrigger;
-    this.#accordionPanel = accordionPanel;
+  constructor(accordionTriggers: string, accordionPanel: string) {
+    this.#accordionTriggers = accordionTriggers;
+    this.#accordionPanels = accordionPanel;
   }
 
   getElements(): WidgetElements {
-    const accordionTrigger = document.querySelector<HTMLElement>(
-      `${this.#accordionTrigger}`,
+    const accordionTriggersList = document.querySelectorAll<HTMLElement>(
+      `${this.#accordionTriggers}`,
     );
 
-    const accordionPanel = document.querySelector<HTMLElement>(
-      `${this.#accordionPanel}`,
+    const accordionPanelsList = document.querySelectorAll<HTMLElement>(
+      `${this.#accordionPanels}`,
     );
 
-    return { accordionTrigger, accordionPanel };
+    const accordionTriggers = Array.from(accordionTriggersList);
+    const accordionPanels = Array.from(accordionPanelsList);
+
+    return { accordionTriggers, accordionPanels };
   }
 
   init(): void {
-    const { accordionTrigger, accordionPanel } = this.getElements();
+    const { accordionTriggers, accordionPanels } = this.getElements();
 
-    if (accordionTrigger !== null && accordionPanel !== null) {
-      accordionTrigger.setAttribute('aria-expanded', 'false');
+    if (accordionTriggers !== null && accordionPanels !== null) {
+      // Check if the accordionTriggers and accordionPanels are of the same length
+      if (accordionTriggers.length === accordionPanels.length) {
+        accordionTriggers.forEach(trigger => {
+          const triggerIndex = accordionTriggers.indexOf(trigger);
+          trigger.setAttribute('aria-expanded', 'false');
 
-      accordionTrigger.setAttribute('aria-controls', accordionPanel.id);
+          trigger.setAttribute(
+            'aria-controls',
+            accordionTriggers[triggerIndex].id,
+          );
 
-      accordionTrigger.setAttribute(
-        'data-widget-accordion-trigger',
-        this.#accordionTrigger,
-      );
+          trigger.setAttribute(
+            'data-widget-accordion-trigger',
+            `${this.#accordionTriggers}`,
+          );
 
-      accordionPanel.setAttribute(
-        'data-widget-accordion-panel',
-        this.#accordionPanel,
-      );
+          trigger.addEventListener('click', () => {
+            if (trigger.getAttribute('aria-expanded') === 'true') {
+              trigger.setAttribute('aria-expanded', 'false');
+            } else {
+              trigger.setAttribute('aria-expanded', 'true');
+            }
+          });
+        });
 
-      accordionPanel.setAttribute('role', 'region');
+        accordionPanels.forEach(panel => {
+          const panelIndex = accordionPanels.indexOf(panel);
+          panel.setAttribute('role', 'region');
 
-      accordionTrigger.addEventListener('click', () => {
-        if (accordionTrigger.getAttribute('aria-expanded') === 'true') {
-          accordionTrigger.setAttribute('aria-expanded', 'false');
-        } else {
-          accordionTrigger.setAttribute('aria-expanded', 'true');
-        }
-      });
+          panel.setAttribute('aria-controls', accordionPanels[panelIndex].id);
+
+          panel.setAttribute(
+            'data-widget-accordion-panel',
+            `${this.#accordionPanels}`,
+          );
+        });
+      } else {
+        // If not throw an error
+        throw new Error(
+          'Initialization error: Discordant arrays found. The arrays for the accordionTriggers and accordionPanels must be of the same length',
+        );
+      }
     } else {
       throw new Error(
-        'Widget must be initiated with an accordionTrigger and an accordionPanel',
+        'Widget must be initiated with an accordionTriggers and an accordionPanel',
       );
     }
   }
