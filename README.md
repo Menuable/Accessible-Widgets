@@ -1,3 +1,4 @@
+
 # Accessible Widgets - Easy Plug-and-Play Accessibility Improvement For Your Web Widgets
 
 ## Table of Content
@@ -9,7 +10,9 @@
       - [MenuWidget Init Options ](#menuwidget-init-options-)
   - [Roadmap ](#roadmap-)
 
-Accessible Widgets is a plug-and-play utility package that allows developers easily improve the accessibility of their web widgets. With a start of 2 widgets to choose from, this package will automatically add AND update the necessary ARIA attributes for your widgets and handle the keyboard navigation also automatically. All widgets are created and have the keyboard navigations describes in [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/).
+Accessible Widgets is a plug-and-play utility package that allows developers easily improve the accessibility of their web widgets. With a start of 2 widgets to choose from, this package will automatically add AND update the necessary ARIA attributes for your widgets as well as handling the keyboard navigation automatically.
+
+All widgets follow the keyboard navigation guidelines in the [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/).
 
 ## Getting Started <a name="introduction"></a>
 
@@ -23,7 +26,7 @@ After installing the package, next you to need to connect your HTML to the widge
 
 ### Using MenuWidget <a name="menuwidget"></a>
 
-The **`MenuWidget`** class allows you improve the accessibility and keyboard navigation of menus in you web application. At its minimum, the MenuWidget requires a `**menuControl**` and a `**menu**` parameter both of which **MUST** be valid [CSS Selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors). By convention the menuControl and menu parameters are CSS ID selectors like so:
+The **`MenuWidget`** class allows you improve the accessibility and keyboard navigation of menus in you web application. At its minimum, the MenuWidget requires a `menuControl` and a `menu` parameter both of which **must** be valid [CSS Selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors). By convention the menuControl and menu parameters are CSS ID selectors like so:
 
 ```javascript
 import { MenuWidget } from 'accessible-widgets';
@@ -37,7 +40,7 @@ const notificationMenuWidget = new MenuWidget(
 
 When this is done, the package searches the DOM for the elements that meet satisfy those selectors and adds ARIA attrbutes to both element. It will also get all direct focusable descendants of the menu element and create a focus trap with those elements.
 
-An optional third parameter `**menuItems**` may be passed. By convention this is a CSS class selector. When this is present, the package uses it to find all elements that meet that selector and creates a focus trap with those elements instead. This is useful for markup where the menuitems are not direct descendants of the menu element but nested several levels down. This is shown below:
+An optional third parameter `menuItems` may be passed. By convention this is a CSS class selector. When this is present, the package uses it to find all elements that meet that selector and creates a focus trap with those elements instead. This is useful for markup where the menuitems are not direct descendants of the menu element but nested several levels down. This is shown below:
 
 ```javascript
 import { MenuWidget } from 'accessible-widgets';
@@ -50,7 +53,7 @@ const notificationMenuWidget = new MenuWidget(
 );
 ```
 
-After registering your elements with the package, next you need to intialise the widget by calling the init method. The widget may be initialised with or without [options](#menuwidgetoptions), like so:
+After registering your elements with the package, you need to initialize the widget by calling the `init` method. The widget may be initialized with or without [options](#menuwidgetoptions), like so:
 
 ```javascript
 import { MenuWidget } from 'accessible-widgets';
@@ -93,7 +96,7 @@ merchantProfileMenu.init({
 
 - `mirrorArrowBtn - boolean`
 
-  If the keyboard arrow buttons should be mirrored, i.e. **ArrowDown** and **ArrowRight** keys share the same functionalities as does the **ArrowUp** and **ArrowLeft** keys. Default value is `true`. Also note that this option does nothing when the pattern option is set to type `menubar`
+  If the keyboard arrow buttons should be mirrored, i.e. `ArrowDown` and `ArrowRight` keys share the same functionalities as does the `ArrowUp` and `ArrowLeft` keys. Default value is `true`. Also note that this option does nothing when the pattern option is set to type `menubar`
 
 - `pattern - 'disclosure' | 'menubar'`
 
