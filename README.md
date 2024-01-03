@@ -1,5 +1,11 @@
 # Accessible Widgets - Easy Plug-and-Play Accessibility Improvement For Your Web Widgets
 
+<div align="center">
+
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/menuable/accessible-widgets/release.yml) ![npm](https://img.shields.io/npm/dw/accessible-widgets) ![NPM](https://img.shields.io/npm/l/accessible-widgets) ![npm bundle size](https://img.shields.io/bundlephobia/min/accessible-widgets) ![npm](https://img.shields.io/npm/v/accessible-widgets)
+
+</div>
+
 ## Table of Content
 
 - [Accessible Widgets - Easy Plug-and-Play Accessibility Improvement For Your Web Widgets](#accessible-widgets---easy-plug-and-play-accessibility-improvement-for-your-web-widgets)
@@ -7,6 +13,7 @@
   - [Getting Started ](#getting-started-)
     - [Using MenuWidget ](#using-menuwidget-)
       - [MenuWidget Init Options ](#menuwidget-init-options-)
+  - [Using AccordionWidget](#using-accordionwidget)
   - [Roadmap ](#roadmap-)
 
 Accessible Widgets is a plug-and-play utility package that allows developers easily improve the accessibility of their web widgets. With a start of 2 widgets to choose from, this package will automatically add AND update the necessary ARIA attributes for your widgets as well as handling the keyboard navigation automatically.
@@ -103,8 +110,23 @@ merchantProfileMenu.init({
 
   The menu pattern to use on initialisation. Default value is `disclosure`. Please refer to the [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/) to see how these types differ.
 
+## Using AccordionWidget
+
+Like the MenuWidget, the AccordionWidget is aimed at improving the accessibility of accordions in your web applications. The AccordionWidget **requires** two parameters when you register the widget - a single CSS selector (a class selector by convention) for all the accordion headers in the accordion and a single CSS selector (also a class selector by convention) for all the accordion panels in the accordion.
+
+```javascript
+import { AccordionWidget } from 'accessible-widgets';
+
+// Register your accordion with the package
+const faqAccordionWidget = new AccordionWidget(
+  '.accordion-triggers',
+  '.accordion-panels',
+);
+
+// initialise the widget
+faqAccordionWidget.init();
+```
+
 ## Roadmap <a name="roadmap"></a>
 
 Presently the package only has implementations for one widget. Work is ongoing to add another widget for accordions and that should be completed. Weekly releases can be expected until we complete all widgets.
-
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
