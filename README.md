@@ -13,7 +13,8 @@
   - [Getting Started ](#getting-started-)
     - [Using MenuWidget ](#using-menuwidget-)
       - [MenuWidget Init Options ](#menuwidget-init-options-)
-  - [Using AccordionWidget](#using-accordionwidget)
+    - [Using AccordionWidget](#using-accordionwidget)
+      - [AccordionWidget Init Options ](#accordionwidget-init-options-)
   - [Roadmap ](#roadmap-)
 
 Accessible Widgets is a plug-and-play utility package that allows developers easily improve the accessibility of their web widgets. With a start of 2 widgets to choose from, this package will automatically add AND update the necessary ARIA attributes for your widgets as well as handling the keyboard navigation automatically.
@@ -110,9 +111,11 @@ merchantProfileMenu.init({
 
   The menu pattern to use on initialisation. Default value is `disclosure`. Please refer to the [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/) to see how these types differ.
 
-## Using AccordionWidget
+### Using AccordionWidget
 
 Like the MenuWidget, the AccordionWidget is aimed at improving the accessibility of accordions in your web applications. The AccordionWidget **requires** two parameters when you register the widget - a single CSS selector (a class selector by convention) for all the accordion headers in the accordion and a single CSS selector (also a class selector by convention) for all the accordion panels in the accordion.
+
+Like the MenuWidget, the AccordionWidget may be initialized with or without [options](#accordionwidgetoptions).
 
 ```javascript
 import { AccordionWidget } from 'accessible-widgets';
@@ -127,6 +130,14 @@ const faqAccordionWidget = new AccordionWidget(
 faqAccordionWidget.init();
 ```
 
+#### AccordionWidget Init Options <a name="accordionwidgetoptions"></a>
+
+- `setAriaLabelledBy - boolean`
+  If the aria-labelledby attribute should be set on initialisation. Default value is true.
+
+- `persistAccordionViewState - boolean`
+  If one accordion panel MUST be open at all times. If true, the next sibling panel will automatically open and be given focus when one panel is closed. If the panel is the last in the accordion, the first panel in the accordion will be opened and given focus. Default value is false.
+
 ## Roadmap <a name="roadmap"></a>
 
-Presently the package only has implementations for one widget. Work is ongoing to add another widget for accordions and that should be completed. Weekly releases can be expected until we complete all widgets.
+Presently the package only has implementations for two widget. Work is ongoing to add more widgets within the coming weeks with code improvements. Weekly releases can be expected until we complete all widgets.
