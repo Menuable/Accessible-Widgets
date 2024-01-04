@@ -15,7 +15,6 @@
       - [MenuWidget Init Options ](#menuwidget-init-options-)
     - [Using AccordionWidget](#using-accordionwidget)
       - [AccordionWidget Init Options ](#accordionwidget-init-options-)
-  - [Roadmap ](#roadmap-)
 
 Accessible Widgets is a plug-and-play utility package that allows developers easily improve the accessibility of their web widgets. With a start of 2 widgets to choose from, this package will automatically add AND update the necessary ARIA attributes for your widgets as well as handling the keyboard navigation automatically.
 
@@ -115,7 +114,7 @@ merchantProfileMenu.init({
 
 Like the MenuWidget, the AccordionWidget is aimed at improving the accessibility of accordions in your web applications. The AccordionWidget **requires** two parameters when you register the widget - a single CSS selector (a class selector by convention) for all the accordion headers in the accordion and a single CSS selector (also a class selector by convention) for all the accordion panels in the accordion.
 
-Like the MenuWidget, the AccordionWidget may be initialized with or without [options](#accordionwidgetoptions).
+The MenuWidget, the AccordionWidget may be initialized with or without [options](#accordionwidgetoptions).
 
 ```javascript
 import { AccordionWidget } from 'accessible-widgets';
