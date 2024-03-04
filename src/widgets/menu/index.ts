@@ -1,3 +1,4 @@
+import WidgetError from '../../utils/WidgetError';
 import handleKeyPress from './handleKeyPress';
 
 type WidgetElements = {
@@ -132,7 +133,7 @@ class MenuWidget {
 
         if (focusableMenuItems.length === 0) {
           // No menuitems to iterate through to create the tab trap either because no direct focusable children exists or wrong CSS selector was passed.
-          throw new Error(
+          throw new WidgetError(
             'Unable to create tab trap. No focusable element exists to create trap with',
           );
         } else {
@@ -161,7 +162,7 @@ class MenuWidget {
         }
       });
     } else {
-      throw new Error(
+      throw new WidgetError(
         'Widget initialisation failed. Widget must be instantiated with a menu control and a menu!',
       );
     }
