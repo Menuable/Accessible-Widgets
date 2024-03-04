@@ -1,3 +1,5 @@
+import WidgetError from '../../utils/WidgetError';
+
 type WidgetElements = {
   accordionTriggers: HTMLElement[] | null;
   accordionPanels: HTMLElement[] | null;
@@ -116,12 +118,12 @@ class AccordionWidget {
         }
       } else {
         // If the accordionTriggers and accordionPanels are NOT of the same length throw an error
-        throw new Error(
+        throw new WidgetError(
           'Initialization error: Discordant arrays found. The arrays for the accordionTriggers and accordionPanels must be of the same length',
         );
       }
     } else {
-      throw new Error(
+      throw new WidgetError(
         'Widget must be initiated with an accordionTriggers and an accordionPanel',
       );
     }
